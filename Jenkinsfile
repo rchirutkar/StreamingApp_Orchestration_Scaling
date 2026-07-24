@@ -99,24 +99,40 @@ pipeline {
 
         stage('Deploy to EKS') {
             steps {
-                sh '''
-                aws eks update-kubeconfig \
-                  --region ap-south-1 \
-                  --name streamingapp-eks
-                  
-                ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+		                
+		withCredentials([
+		    string(credentialsId: 'RANJEET_JWT_SECRET', variable: 'JWT_SECRET'),
+		    string(credentialsId: 'RANJEET_AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
+		    string(credentialsId: 'RANJEET_AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
+		]) {		
 
-                helm upgrade --install streamingapp ./helm/streamingapp \
-                  -n streamingapp \
-                  --create-namespace \
-                  --set accountId=$ACCOUNT_ID \
-                  --set images.auth.tag=$BUILD_NUMBER \
-                  --set images.streaming.tag=$BUILD_NUMBER \
-                  --set images.admin.tag=$BUILD_NUMBER \
-                  --set images.chat.tag=$BUILD_NUMBER \
-                  --set images.frontend.tag=$BUILD_NUMBER
-                '''
-            }
+
+			sh '''
+	                aws eks update-kubeconfig \
+	                  --region ap-south-1 \
+	                  --name streamingapp-eks
+	                  
+	                ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+
+			kubectl create secret generic streamingapp-secret \
+			  --namespace streamingapp \
+			  --from-literal=JWT_SECRET="$JWT_SECRET" \
+			  --from-literal=AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
+			  --from-literal=AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
+			  --dry-run=client -o yaml | kubectl apply -f -                
+
+			helm upgrade --install streamingapp ./helm/streamingapp \
+	                  -n streamingapp \
+	                  --create-namespace \
+	                  --set accountId=$ACCOUNT_ID \
+	                  --set images.auth.tag=$BUILD_NUMBER \
+	                  --set images.streaming.tag=$BUILD_NUMBER \
+	                  --set images.admin.tag=$BUILD_NUMBER \
+	                  --set images.chat.tag=$BUILD_NUMBER \
+	                  --set images.frontend.tag=$BUILD_NUMBER
+	                '''
+		    }
+	      }
         }
     }
 
