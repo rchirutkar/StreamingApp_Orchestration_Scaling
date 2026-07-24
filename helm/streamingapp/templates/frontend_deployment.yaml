@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: "{{ .Values.accountId }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.images.frontend.repository }}:{{ .Values.images.auth.tag }}"
+        image: "{{ .Values.accountId }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.images.frontend.repository }}:{{ .Values.images.frontend.tag }}"
 
         imagePullPolicy: {{ .Values.imagePullPolicy }}
 

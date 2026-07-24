@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: chat
-        image: "{{ .Values.accountId }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.images.chat.repository }}:{{ .Values.images.auth.tag }}"
+        image: "{{ .Values.accountId }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.images.chat.repository }}:{{ .Values.images.chat.tag }}"
 
         imagePullPolicy: {{ .Values.imagePullPolicy }}
 

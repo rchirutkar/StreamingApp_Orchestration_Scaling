@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: admin
-        image:  "{{ .Values.accountId }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.images.admin.repository }}:{{ .Values.images.auth.tag }}"
+        image:  "{{ .Values.accountId }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.images.admin.repository }}:{{ .Values.images.admin.tag }}"
         imagePullPolicy:  {{ .Values.imagePullPolicy }}
         ports:
         - containerPort: 3003

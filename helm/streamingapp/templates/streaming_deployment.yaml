@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: streaming
-        image: "{{ .Values.accountId }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.images.streaming.repository }}:{{ .Values.images.auth.tag }}"
+        image: "{{ .Values.accountId }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.images.streaming.repository }}:{{ .Values.images.streaming.tag }}"
 
         imagePullPolicy: {{ .Values.imagePullPolicy }}
 
