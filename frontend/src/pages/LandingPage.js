@@ -129,7 +129,7 @@ export const LandingPage = () => {
             <Grid item xs={12} md={7}>
               <Typography
                 variant={isMobile ? 'h3' : 'h1'}
-                color="rgba(255,0,0,0.75)"
+                color="rgba(255,255,0,0.75)"
 		sx={{ fontWeight: 800, lineHeight: 1.05, mb: 3 }}
 		>
                 Stream premium cinema from the comfort of anywhere.
