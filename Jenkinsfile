@@ -96,6 +96,28 @@ pipeline {
                 '''
             }
         }
+
+        stage('Deploy to EKS') {
+            steps {
+                sh '''
+                aws eks update-kubeconfig \
+                  --region ap-south-1 \
+                  --name streamingapp-eks
+        
+                ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+        
+                kubectl set image deployment/auth auth=$ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/streamingapp-auth:${BUILD_NUMBER} -n streamingapp
+        
+                kubectl set image deployment/streaming streaming=$ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/streamingapp-streaming:${BUILD_NUMBER} -n streamingapp
+        
+                kubectl set image deployment/admin admin=$ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/streamingapp-admin:${BUILD_NUMBER} -n streamingapp
+        
+                kubectl set image deployment/chat chat=$ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/streamingapp-chat:${BUILD_NUMBER} -n streamingapp
+        
+                kubectl set image deployment/frontend frontend=$ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/streamingapp-frontend:${BUILD_NUMBER} -n streamingapp
+                '''
+            }
+        }
     }
 
     post {
