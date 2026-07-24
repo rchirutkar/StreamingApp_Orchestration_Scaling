@@ -10,23 +10,23 @@ imagePullPolicy: Always
 images:
   auth:
     repository: streamingapp-auth
-    tag: latest
+    tag: ""
 
   streaming:
     repository: streamingapp-streaming
-    tag: latest
+    tag: ""
 
   admin:
     repository: streamingapp-admin
-    tag: latest
+    tag: ""
 
   chat:
     repository: streamingapp-chat
-    tag: latest
+    tag: ""
 
   frontend:
     repository: streamingapp-frontend
-    tag: latest
+    tag: ""
 
 service:
   auth: 3001
