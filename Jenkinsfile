@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         AWS_REGION = 'ap-south-1'
-        AWS_CREDENTIALS = 'aws-prod'
+        AWS_CREDENTIALS = 'aws-prod-ranjeet'
     }
 
     options {
