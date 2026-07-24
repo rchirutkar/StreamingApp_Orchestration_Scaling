@@ -6,10 +6,25 @@ pipeline {
         AWS_CREDENTIALS = 'aws-prod'
     }
 
+    options {
+        timestamps()
+        timeout(time: 20, unit: 'MINUTES') // Fails the build if it takes longer than  20 mins
+        ansiColor('xterm')
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
     stages {
+
+        stage('Clean Workspace') {
+            steps {
+                echo 'Cleaning Workspace...'
+                cleanWs()
+            }
+        }
 
         stage('Checkout') {
             steps {
+                echo 'Checking out source code...'
                 checkout scm
             }
         }
