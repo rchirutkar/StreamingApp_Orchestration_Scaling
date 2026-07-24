@@ -8,7 +8,7 @@ pipeline {
 
     options {
         timestamps()
-        //timeout(time: 20, unit: 'MINUTES') // Fails the build if it takes longer than  20 mins
+        timeout(time: 30, unit: 'MINUTES') // Fails the build if it takes longer than  30 mins
         //wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'Xterm'])
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
