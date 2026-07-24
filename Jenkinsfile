@@ -9,7 +9,7 @@ pipeline {
     options {
         timestamps()
         timeout(time: 20, unit: 'MINUTES') // Fails the build if it takes longer than  20 mins
-        ansiColor('xterm')
+        //wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'Xterm'])
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
 
